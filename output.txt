@@ -1,6 +1,0 @@
-1c1
-< Apples
-\ No newline at end of file
----
-> Oranges
-\ No newline at end of file
