@@ -23,10 +23,13 @@ main(){
 				if(input == "admin"){
 					active_user = trans.Login("admin");
 				} else if(input == "standard") {
-					cout << "Please enter the session type: ";
-					cin >> input;
-					transform(input.begin(), input.end(), input.begin(), ::tolower);
+					cout << "Please enter the account name: ";
+					cin.ignore(1, '\n');
+					getline(cin, input);
+					transform(input.begin(), input.end(), input.begin(), ::toupper);
 					active_user = trans.Login(input);
+				} else {
+					cout << "Error: Please enter 'standard' or 'admin' as your session type." << endl;
 				}
 			} else {
 				cout << "Please login first before issuing commands" << endl;

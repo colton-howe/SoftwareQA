@@ -1,7 +1,6 @@
 #ifndef TRANSACTIONSFILE_H
 #define TRANSACTIONSFILE_H
 
-#include "User.h"
 #include <string>
 
 using namespace std;
@@ -14,6 +13,7 @@ private:
 	double new_balance_;
 
 public:
+	TransactionsFile(string transaction_id, string account_name, int account_number, double new_balance);
 	void WriteTransaction();
 	string FormatTransactionID(string transaction_id);
 	string FormatName(string name);

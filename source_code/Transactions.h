@@ -24,6 +24,7 @@ public:
 	void Disable(User user);
 	void ChangePlan(User user);
 	User ReadAccount(string name, int account);
+	void UpdateDay(User changed_user);
 };
 
 #endif

@@ -14,6 +14,7 @@ User::User(int account_number, string account_name, double balance){
 }
 
 void User::SetStatus(){
+	//Switch from active to disabled or vice versa
 	if(account_status_ == 'A'){
 		account_status_ = 'D';
 	} else {
@@ -22,6 +23,7 @@ void User::SetStatus(){
 }
 
 void User::SetPlan(){
+	//Switch from student to non-student or vice versa
 	if(plan_type_ == "NP"){
 		plan_type_ = "SP";
 	} else {
