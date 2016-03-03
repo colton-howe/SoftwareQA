@@ -13,7 +13,7 @@ private:
 public:
 	Transactions();
 	User Login(string name);
-	User Logout();
+	User Logout(User user);
 	void Withdrawal(User user);
 	void Deposit(User user);
 	void Transfer(User user);

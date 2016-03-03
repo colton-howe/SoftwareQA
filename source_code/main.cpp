@@ -8,18 +8,23 @@
 using namespace std;
 
 main(){
+	//Set the inital user as not logged in.
 	User active_user(00000, "NULL", 0);
 	while(true){
 		string input;
 		Transactions trans;
+		//Take in user input
 		cout << "Please enter a command: ";
 		cin >> input;
 		transform(input.begin(), input.end(), input.begin(), ::tolower);
+		//Check if user is logged in or not.
 		if(active_user.GetName() == "NULL"){
+			//If user is not logged in, only accept login as a command
 			if(input == "login"){
 				cout << "Please enter the session type: ";
 				cin >> input;
 				transform(input.begin(), input.end(), input.begin(), ::tolower);
+				//If they enter admin, log them in as admin. Otherwise, ask for name and search for that user.
 				if(input == "admin"){
 					active_user = trans.Login("admin");
 				} else if(input == "standard") {
@@ -35,8 +40,11 @@ main(){
 				cout << "Please login first before issuing commands" << endl;
 			}
 		} else {
+			//Parse user input and call correct command.
 			if(input == "login"){
 				cout << "Error: Already logged into account" << endl;
+			} else if (active_user.GetStatus() == 'D'){
+				cout << "Error: Account is currently disabled. Please contact admin." << endl;
 			} else if (input == "withdrawal"){
 				trans.Withdrawal(active_user);
 			} else if (input == "transfer"){
@@ -46,17 +54,37 @@ main(){
 			} else if (input == "deposit"){
 				trans.Deposit(active_user);
 			} else if (input == "create"){
-				trans.Create(active_user);
+				if(active_user.GetName() == "ADMIN"){
+					trans.Create(active_user);
+				} else {
+					cout << "Error: Only admin can access this function." << endl;
+				}
 			} else if (input == "delete"){
-				trans.Delete(active_user);
+				if(active_user.GetName() == "ADMIN"){
+					trans.Delete(active_user);
+				} else {
+					cout << "Error: Only admin can access this function." << endl;
+				}
 			} else if (input == "disable"){
-				trans.Disable(active_user);
+				if(active_user.GetName() == "ADMIN"){
+					trans.Disable(active_user);
+				} else {
+					cout << "Error: Only admin can access this function." << endl;
+				}
 			} else if (input == "enable"){
-				trans.Enable(active_user);
+				if(active_user.GetName() == "ADMIN"){
+					trans.Enable(active_user);
+				} else {
+					cout << "Error: Only admin can access this function." << endl;
+				}
 			} else if (input == "changeplan"){
-				trans.ChangePlan(active_user);
+				if(active_user.GetName() == "ADMIN"){
+					trans.ChangePlan(active_user);
+				} else {
+					cout << "Error: Only admin can access this function." << endl;
+				}
 			} else if (input == "logout"){
-				active_user = trans.Logout();
+				active_user = trans.Logout(active_user);
 			} else {
 				cout << "Error: Not a valid command." << endl;
 			}

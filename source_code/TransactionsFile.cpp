@@ -36,7 +36,7 @@ string TransactionsFile::FormatName(string name){
 	//If the name is not of length 20, add spaces until it is of length 20
 	if(name.length() < 20){
 		for(int i = name.length(); i < 20; i++){
-			formatted_name.insert(0," ");
+			formatted_name.insert(name.length()," ");
 		}
 	}
 	return formatted_name;
@@ -56,8 +56,8 @@ string TransactionsFile::FormatNumber(int account_number){
 	account_buf << account_number;
 	string str_number = account_buf.str();
 	//If the length of account number < 5, pad 0's until length is 5.
-	if(account_length < 5){
-		for(int i = 0; i < 5-account_length; i++){
+	if(str_number.length() < 5){
+		for(int i = str_number.length(); i < 5; i++){
 			str_number.insert(0,"0");
 		}
 	}
@@ -70,7 +70,7 @@ string TransactionsFile::FormatBalance(double balance){
 	balance_buf << setprecision(2) << fixed << balance;
 	string str_balance = balance_buf.str();
 	if(str_balance.length() < 8){
-		for(int i = 0; i < 9-str_balance.length(); i++){
+		for(int i = str_balance.length(); i < 8; i++){
 			str_balance.insert(0,"0");
 		}
 	}
