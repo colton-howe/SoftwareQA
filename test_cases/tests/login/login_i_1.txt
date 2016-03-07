@@ -1,0 +1,7 @@
+login
+admin
+withdrawal
+exit
+1
+logout
+exit

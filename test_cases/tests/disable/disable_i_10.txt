@@ -1,0 +1,6 @@
+login
+admin
+disable
+Han Solo
+12349
+logout

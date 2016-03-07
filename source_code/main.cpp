@@ -16,6 +16,7 @@ main(){
 		//Take in user input
 		cout << "Please enter a command: ";
 		cin >> input;
+		cout << input << endl;
 		transform(input.begin(), input.end(), input.begin(), ::tolower);
 		//Check if user is logged in or not.
 		if(active_user.GetName() == "NULL"){
@@ -23,6 +24,7 @@ main(){
 			if(input == "login"){
 				cout << "Please enter the session type: ";
 				cin >> input;
+				cout << input << endl;
 				transform(input.begin(), input.end(), input.begin(), ::tolower);
 				//If they enter admin, log them in as admin. Otherwise, ask for name and search for that user.
 				if(input == "admin"){
@@ -31,11 +33,14 @@ main(){
 					cout << "Please enter the account name: ";
 					cin.ignore(1, '\n');
 					getline(cin, input);
+					cout << input << endl;
 					transform(input.begin(), input.end(), input.begin(), ::toupper);
 					active_user = trans.Login(input);
 				} else {
 					cout << "Error: Please enter 'standard' or 'admin' as your session type." << endl;
 				}
+			} else if (input == "exit"){
+				exit(0);
 			} else {
 				cout << "Please login first before issuing commands" << endl;
 			}
@@ -85,6 +90,8 @@ main(){
 				}
 			} else if (input == "logout"){
 				active_user = trans.Logout(active_user);
+			} else if (input == "exit"){
+				exit(0);
 			} else {
 				cout << "Error: Not a valid command." << endl;
 			}

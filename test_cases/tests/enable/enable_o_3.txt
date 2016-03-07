@@ -1,0 +1,10 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please Enter a command: enable
+Enable
+--------------------------
+Please enter account name: Invalid Name
+Error: Account not owned by this user.
+Please enter a command: logout
+Logout Successful

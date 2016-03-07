@@ -1,0 +1,7 @@
+Please enter a command: Please enter the session type: Login Successful
+Please enter a command: ------------------
+|   Withdrawal   |
+------------------
+Please enter the account name: Please enter the account number: Error: Account not found.
+Please enter a command: Logout Successful
+Please enter a command: 

@@ -1,0 +1,2 @@
+Please enter a command: withdrawal
+Error: No account logged in.

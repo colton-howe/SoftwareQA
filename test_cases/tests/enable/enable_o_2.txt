@@ -1,0 +1,8 @@
+Please enter a command: login
+Login as Standard or Admin: standard
+Please enter your name: Bob Saget
+Login Successful
+Please Enter a command: enable
+Error: Non-admin account running privileged command.
+Please enter a command: logout
+Logout Successful

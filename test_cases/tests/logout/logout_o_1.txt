@@ -1,0 +1,5 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please enter a command: logout
+Logout Successful

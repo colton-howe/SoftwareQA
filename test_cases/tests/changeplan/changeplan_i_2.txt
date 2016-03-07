@@ -1,0 +1,6 @@
+login
+standard
+Han Solo
+changeplan
+exit
+logout

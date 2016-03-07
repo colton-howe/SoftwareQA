@@ -1,0 +1,13 @@
+Please enter a command: login
+Login as Standard or Admin: standard
+Please enter your name: Jim Disabled
+Login Successful
+Please enter a command: deposit
+Deposit
+--------------------------
+Please enter account name: exit
+Error: No account with that name found.
+Please enter a command: enable
+Error: Non-admin account running privileged command.
+Please enter a command: logout
+Loout Successful

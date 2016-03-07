@@ -1,0 +1,8 @@
+Please enter a command: login
+Login as Standard or Admin: standard
+Please enter account name: Aaron Active
+Login Successful
+Please enter a command: changeplan
+Error: Transaction only for admin user.
+Please enter a command: logout
+Logout Successful

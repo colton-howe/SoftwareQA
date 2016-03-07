@@ -1,0 +1,8 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please Enter a command: delete
+Please enter name of account to be deleted: exit
+Error! Name not found. Only alphanumeric.
+Please Enter a command: logout
+Logout Successful

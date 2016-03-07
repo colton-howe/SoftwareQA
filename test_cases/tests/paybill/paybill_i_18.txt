@@ -1,0 +1,8 @@
+login
+standard
+Jim MyAccountBalanceIs2000
+paybill
+00004
+TV
+2000
+logout

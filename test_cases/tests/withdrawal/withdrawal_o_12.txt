@@ -1,0 +1,11 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please enter a command: withdrawal
+Withdrawal
+--------------------------
+Please enter account name: Aaron Active
+Please enter account number: 00012
+Error: Account not owned by this user.
+Please enter a command: logout
+Logout Successful

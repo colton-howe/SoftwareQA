@@ -1,0 +1,6 @@
+Please enter a command: login
+
+Login as Standard or Admin: standard 
+Please enter a name: Han Solo
+
+Error! No such user exists.

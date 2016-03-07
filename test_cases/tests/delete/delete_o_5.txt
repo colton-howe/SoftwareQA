@@ -1,0 +1,10 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please Enter a command: delete
+Please enter name of account to be deleted: Han Solo
+Name found.
+Please enter account number: exit
+Error! Only numbers are accepted.
+Please Enter a command: logout
+Logout Successful

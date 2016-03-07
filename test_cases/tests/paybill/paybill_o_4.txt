@@ -1,0 +1,10 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please Enter a command: paybill
+Pay Bills
+--------------------------
+Please enter account name: END_OF_FILE
+Error: Special account names cannot be accessed.
+Please enter a command: logout
+Logout Successful

@@ -1,0 +1,11 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please Enter a command: enable
+Enable
+--------------------------
+Please enter account name: Jim Disabled
+Please enter account number: 00005
+Enable successful.
+Please enter a command: logout
+Logout Successful

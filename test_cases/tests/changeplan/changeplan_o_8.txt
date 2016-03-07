@@ -1,0 +1,10 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please Enter a command: changeplan
+Please enter name of account to change plan for: Han Solo
+Please enter account number:12345
+Success!
+Account plan is changed.
+Please Enter a command: logout
+Logout Successful

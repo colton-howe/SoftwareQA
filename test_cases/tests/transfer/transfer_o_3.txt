@@ -1,0 +1,12 @@
+Please enter a command: login
+Login as Standard or Admin: standard
+Please enter account name: Arron Active
+Login Successful
+Please enter a command: transfer
+Transfer
+--------------------------
+Please enter account name: Aaron Active
+Please enter account name: exit
+Error: Not a number entered.
+Please enter a command: logout
+Logout Successful

@@ -1,0 +1,13 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please Enter a command: paybill
+Pay Bill
+--------------------------
+Please enter account name: Jim Active
+Please enter account number: 00001
+Please enter a company for your bill payment: TV
+Please enter amount to pay in this bill: 4000
+Bill Payment Complete
+Please enter a command: logout
+Logout Successful

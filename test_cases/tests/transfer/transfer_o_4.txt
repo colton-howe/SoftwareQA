@@ -1,0 +1,10 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please enter a command: transfer
+Transfer
+--------------------------
+Please enter account name: Invalid Name
+Error: Name not attached to an account.
+Please enter a command: logout
+Logout Successful

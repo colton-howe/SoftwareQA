@@ -1,0 +1,8 @@
+login
+admin
+paybill
+Jim Active
+00001
+TV
+exit
+logout

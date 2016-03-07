@@ -1,0 +1,6 @@
+login
+admin
+transfer
+Aaron Active
+exit
+logout

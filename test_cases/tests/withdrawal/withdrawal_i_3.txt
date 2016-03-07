@@ -1,0 +1,6 @@
+login
+standard
+Joe Smith
+withdrawal
+exit
+logout

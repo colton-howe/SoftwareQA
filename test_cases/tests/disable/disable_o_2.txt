@@ -1,0 +1,7 @@
+Please enter a command: login
+Login as Standard or Admin: standard
+Login Successful
+Please Enter a command: disable
+Error command not found!
+Please Enter a name: logout
+Logout Successful

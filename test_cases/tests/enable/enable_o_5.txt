@@ -1,0 +1,10 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please Enter a command: enable
+Enable
+--------------------------
+Please enter account name: Already Enabled Account Holder
+Error: All accounts by this user are active.
+Please enter a command: logout
+Logout Successful

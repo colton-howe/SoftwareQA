@@ -1,0 +1,11 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please Enter a command: paybill
+Pay Bill
+--------------------------
+Please enter account name: Jim Active
+Please enter account number: 00002
+Error: Entered account is not active.
+Please enter a command: logout
+Logout Successful

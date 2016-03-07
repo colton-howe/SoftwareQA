@@ -1,0 +1,13 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please enter a command: transfer
+Transfer
+--------------------------
+Please enter account name: Aaron Active
+Please enter account number where the money is being transfered from: 00002
+Please enter account number where the money is being transfered to: 00001
+Please enter the transfer amount: 98000
+Error: Transaction woul put balance of account where money is being transfered to above $99999.99.
+Please enter a command: logout
+Logout Successful

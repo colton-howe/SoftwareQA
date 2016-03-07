@@ -1,0 +1,8 @@
+login
+standard
+Aaron Active
+transfer
+00002
+00001
+1200
+logout

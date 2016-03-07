@@ -1,0 +1,14 @@
+Please enter a command: login
+Login as Standard or Admin: standard
+Please enter your name: Jim MyAccountBalanceIs2000
+Login Successful
+Please Enter a command: paybill
+Pay Bill
+--------------------------
+Please enter account name: Jim MyAccountBalanceIs2000
+Please enter account number: 00004
+Please enter a company for your bill payment: TV
+Please enter amount to pay in this bill: 2000
+Error: Cannot make payment that would make account have less than $0 balance.
+Please enter a command: logout
+Logout Successful

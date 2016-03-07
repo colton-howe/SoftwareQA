@@ -1,0 +1,6 @@
+login
+standard
+Bob Saget
+deposit
+exit
+logout

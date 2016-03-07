@@ -1,0 +1,15 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please enter a command: transfer
+Transfer
+--------------------------
+Please enter account name: Aaron Active
+Please enter account number where the money is being transfered from: 00002
+Please enter account number where the money is being transfered to: 00001
+Please enter the transfer amount: 300
+Transfer Complete
+New Balance After Transfer = $2000
+Useable Balanace
+Please enter a command: logout
+Logout Successful

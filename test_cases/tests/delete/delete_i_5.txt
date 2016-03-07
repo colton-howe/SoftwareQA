@@ -1,0 +1,6 @@
+login
+admin
+delete
+Han Solo
+exit
+logout

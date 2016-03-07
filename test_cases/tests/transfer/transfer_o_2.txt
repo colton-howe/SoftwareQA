@@ -1,0 +1,10 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please enter a command: transfer
+Transfer
+--------------------------
+Please enter account name: exit
+Error: No account with that name found
+Please enter a command: logout
+Logout Successful

@@ -1,0 +1,12 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please Enter a command: deposit
+Deposit
+--------------------------
+Please enter account name: Jim Active
+Please enter account number: 00001
+Please enter the deposit amount: -1
+Error: Number cannot be negative.
+Please Enter a command: logout
+Logout Successful

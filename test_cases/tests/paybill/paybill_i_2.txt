@@ -1,0 +1,6 @@
+login
+user
+Bob Saget
+paybill
+exit
+logout

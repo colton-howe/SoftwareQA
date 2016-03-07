@@ -1,0 +1,12 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please enter a command: transfer
+Transfer
+--------------------------
+Please enter account name: Aaron Active
+Please enter account number where the money is being transfered from: 00002
+Please enter account number where the money is being transfered to: forklift
+Error: Not a number entered.
+Please enter a command: logout
+Logout Successful

@@ -1,0 +1,8 @@
+Please enter a command: login
+Login as Standard or Admin: standard
+Please enter a name: Han Solo
+Login Successful
+Please Enter a command: changeplan
+Error command not found!
+Please Enter a command: logout
+Logout Successful

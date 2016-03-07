@@ -1,0 +1,8 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please Enter a command: create
+Please input account holder's name: tom21?$!
+Error! Special characters not allowed. Please use alphanumeric only.
+Please Enter a command: logout
+Logout Successful

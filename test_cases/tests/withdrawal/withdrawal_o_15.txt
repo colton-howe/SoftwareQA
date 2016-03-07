@@ -1,0 +1,13 @@
+Please enter a command: login
+Login as Standard or Admin: standard
+Please enter account name: Aaron Active
+Login Successful
+Please enter a command: withdrawal
+Withdrawal
+--------------------------
+Please enter account name: Aaron Active
+Please enter account number: 00002
+Please enter the withdrawal ammount: 600
+Error: Number cannot be greater than $500 while in standard mode.
+Please enter a command: logout
+Logout Successful

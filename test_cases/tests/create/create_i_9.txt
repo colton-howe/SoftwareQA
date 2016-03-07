@@ -1,0 +1,6 @@
+login
+admin
+create
+Tommys
+100.00
+logout

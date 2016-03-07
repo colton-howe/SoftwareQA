@@ -1,0 +1,6 @@
+login
+admin
+enable
+Jim Disabled
+00005
+logout

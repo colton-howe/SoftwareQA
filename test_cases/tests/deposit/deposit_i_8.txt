@@ -1,0 +1,6 @@
+login
+admin
+deposit
+Jim Active
+00002
+logout

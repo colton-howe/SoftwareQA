@@ -1,0 +1,10 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please Enter a command: enable
+Enable
+--------------------------
+Please enter account name: Jim Active
+Error: No account with that name.
+Please enter a command: logout
+Logout Successful

@@ -1,0 +1,10 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please Enter a command: create
+Please input account holder's name: Tommys
+Success!
+Please input account balance: exit
+Error! Account balance cannot exceed 99999.99 or must have only numbers. Please try again.
+Please Enter a command: logout
+Logout Successful

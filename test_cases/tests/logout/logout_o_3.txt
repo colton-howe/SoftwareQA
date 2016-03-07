@@ -1,0 +1,14 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please enter a command: withdrawal
+Withdrawal
+--------------------------
+Please enter account name: Aaron Active
+Please enter account number: 00002
+Please enter the withdrawal ammount: 222
+Withdrawal Complete.
+New Balance After Withdrawal = $3078.00
+Useable Balance = $3078.00
+Please enter a command: logout
+Logout Successful

@@ -1,0 +1,8 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please Enter a command: changeplan
+Please enter name of account to change plan for: Han Solosd
+Error! Account is disabled.
+Please Enter a command: logout
+Logout Successful

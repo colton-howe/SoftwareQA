@@ -1,0 +1,11 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please enter a command: withdrawal
+Withdrawal
+--------------------------
+Please enter account name: Aaron Active
+Please enter account number: 00003
+Error: Entered account is not active.
+Please enter a command: logout
+Logout Successful

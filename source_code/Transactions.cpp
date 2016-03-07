@@ -20,9 +20,17 @@ Transactions::Transactions(){
 bool Transactions::IsInteger(string check_string){
 	char* p;
 	strtol(check_string.c_str(), &p, 10);
-	//If the function finds a character that could not be interpretted as a string, it stores its index in p. If p is
-	//not the default 0 value, then it can not be a string and is false. Otherwise, it can be an integer and returns true.
+	//If the function finds a character that could not be interpretted as a integer, it stores its index in p. If p is
+	//not the default 0 value, then it can not be an integer and is false. Otherwise, it can be an integer and returns true.
 	return (*p == 0);
+}
+
+bool Transactions::IsDouble(string check_string){
+    char* p = 0;
+    strtod(check_string, &p);
+    //If the function finds a character that could not be interpretted as a double, it stores its index in p. If p is
+	//not the default 0 value, then it can not be a double and is false. Otherwise, it can be a double and returns true.
+    return !(*endptr != '\0' || endptr == check_string);
 }
 
 User Transactions::Login(string name){
@@ -70,6 +78,7 @@ void Transactions::Withdrawal(User user){
 		cout << "Please enter the account name: ";
 		cin.ignore(1, '\n');
 		getline(cin, name_input);
+		cout << name_input << endl;
 		transform(name_input.begin(), name_input.end(), name_input.begin(), ::toupper);
 	} else {
 		name_input = user.GetName();
@@ -79,6 +88,7 @@ void Transactions::Withdrawal(User user){
 	string account_entry;
 	cout << "Please enter the account number: ";
 	cin >> account_entry;
+	cout << account_entry << endl;
 	if(IsInteger(account_entry) == true){
 		istringstream account_buf(account_entry);
 		account_buf >> account_input;
@@ -93,7 +103,8 @@ void Transactions::Withdrawal(User user){
 			string withdraw_entry;
 			cout << "Please enter the amount to withdraw: ";
 			cin >> withdraw_entry;
-			if(IsInteger(withdraw_entry) == true){
+			cout << withdraw_entry << endl;
+			if(IsDouble(withdraw_entry) == true){
 				istringstream withdraw_buf(withdraw_entry);
 				withdraw_buf >> withdraw_amount;
 				//Before checking withdraw amount, check which fee we need to charge. 0.10 if not a student, 0.05 if a student
@@ -140,6 +151,7 @@ void Transactions::Deposit(User user){
 		cout << "Please enter the account name: ";
 		cin.ignore(1, '\n');
 		getline(cin, name_input);
+		cout << name_input << endl;
 		transform(name_input.begin(), name_input.end(), name_input.begin(), ::toupper);
 	} else {
 		name_input = user.GetName();
@@ -149,6 +161,7 @@ void Transactions::Deposit(User user){
 	string account_entry;
 	cout << "Please enter the account number: ";
 	cin >> account_entry;
+	cout << account_entry << endl;
 	if(IsInteger(account_entry) == true){
 		istringstream account_buf(account_entry);
 		account_buf >> account_input;
@@ -163,7 +176,8 @@ void Transactions::Deposit(User user){
 			string deposit_entry;
 			cout << "Please enter the amount to deposit: ";
 			cin >> deposit_entry;
-			if(IsInteger(deposit_entry) == true){
+			cout << deposit_entry << endl;
+			if(IsDouble(deposit_entry) == true){
 				istringstream deposit_buf(deposit_entry);
 				deposit_buf >> deposit_amount;
 				//Before checking deposit amount, check which fee we need to charge. 0.10 if not a student, 0.05 if a student
@@ -208,6 +222,7 @@ void Transactions::Transfer(User user){
 		cout << "Please enter the account name: ";
 		cin.ignore(1, '\n');
 		getline(cin, name_input);
+		cout << name_input << endl;
 		transform(name_input.begin(), name_input.end(), name_input.begin(), ::toupper);
 	} else {
 		name_input = user.GetName();
@@ -218,6 +233,7 @@ void Transactions::Transfer(User user){
 	int transfer_account;
 	cout << "Please enter the account number to transfer from: ";
 	cin >> account_entry;
+	cout << account_entry << endl;
 	if(IsInteger(account_entry) == true){
 		istringstream account_buf(account_entry);
 		account_buf >> account_input;
@@ -230,6 +246,7 @@ void Transactions::Transfer(User user){
 		} else {
 			cout << "Please enter the account number to transfer to: ";
 			cin >> account_entry;
+			cout << account_entry << endl;
 			if(IsInteger(account_entry) == true){
 				istringstream account_buf(account_entry);
 				account_buf >> transfer_account;
@@ -240,7 +257,8 @@ void Transactions::Transfer(User user){
 				string transfer_entry;
 				cout << "Please enter the amount to transfer: ";
 				cin >> transfer_entry;
-				if(IsInteger(transfer_entry) == true){
+				cout << transfer_entry << endl;
+				if(IsDouble(transfer_entry) == true){
 					istringstream transfer_buf(transfer_entry);
 					transfer_buf >> transfer_amount;
 					//Before checking transfer amount, check which fee we need to charge. 0.10 if not a student, 0.05 if a student
@@ -297,15 +315,17 @@ void Transactions::PayBill(User user){
 		cout << "Please enter the account name: ";
 		cin.ignore(1, '\n');
 		getline(cin, name_input);
+		cout << name_input << endl;
 		transform(name_input.begin(), name_input.end(), name_input.begin(), ::toupper);
 	} else {
 		name_input = user.GetName();
 	}
 	//Ask for the user to enter an account number
 	int account_input;
-	int account_entry;
+	string account_entry;
 	cout << "Please enter the account number: ";
 	cin >> account_entry;
+	cout << account_entry << endl;
 	if(IsInteger(account_entry) == true){
 		istringstream account_buf(account_entry);
 		account_buf >> account_input;
@@ -323,13 +343,15 @@ void Transactions::PayBill(User user){
 			cout << "Low Definition TV, Inc. (TV)" << endl;
 			cout << "Enter their abbreviation (e.g. Credit Card Company enter CQ) :";
 			cin >> company_name;
+			cout << company_name << endl;
 			if(company_name.compare("EC") == 0 || company_name.compare("CQ") == 0 || company_name.compare("TV") == 0){
 				//Ask for bill amount
 				int bill_amount;
 				string bill_entry;
 				cout << "Please enter the amount to pay: ";
 				cin >> bill_entry;
-				if(IsInteger(bill_entry) == true){
+				cout << bill_entry << endl;
+				if(IsDouble(bill_entry) == true){
 					istringstream bill_buf(bill_entry);
 					bill_buf >> bill_amount;
 					//Before checking withdraw amount, check which fee we need to charge. 0.10 if not a student, 0.05 if a student
@@ -379,6 +401,7 @@ void Transactions::Create(User user){
 		cout << "Please enter the account name: ";
 		cin.ignore(1, '\n');
 		getline(cin, name_input);
+		cout << name_input << endl;
 		transform(name_input.begin(), name_input.end(), name_input.begin(), ::toupper);
 		if(name_input.length() > 20){
 			name_input.resize(20);
@@ -388,7 +411,8 @@ void Transactions::Create(User user){
 		string balance_entry;
 		cout << "Please enter the initial account balance: ";
 		cin >> balance_entry;
-		if(IsInteger(balance_entry) == true){
+		cout << balance_entry << endl;
+		if(IsDouble(balance_entry) == true){
 			istringstream balance_buf(balance_entry);
 			balance_buf >> balance_amount;
 			if(balance_amount > 99999.99){
@@ -428,12 +452,14 @@ void Transactions::Delete(User user){
 		cout << "Please enter the account name: ";
 		cin.ignore(1, '\n');
 		getline(cin, name_input);
+		cout << name_input << endl;
 		transform(name_input.begin(), name_input.end(), name_input.begin(), ::toupper);
 		//Ask for the user to enter an account number
 		int account_input;
 		string account_entry;
 		cout << "Please enter the account number: ";
 		cin >> account_entry;
+		cout << account_entry << endl;
 		if(IsInteger(account_entry) == true){
 			istringstream account_buf(account_entry);
 			account_buf >> account_input;
@@ -533,12 +559,14 @@ void Transactions::Enable(User user){
 		cout << "Please enter the account name: ";
 		cin.ignore(1, '\n');
 		getline(cin, name_input);
+		cout << name_input << endl;
 		transform(name_input.begin(), name_input.end(), name_input.begin(), ::toupper);
 		//Ask for the user to enter an account number
 		int account_input;
 		string account_entry;
 		cout << "Please enter the account number: ";
 		cin >> account_entry;
+		cout << account_entry << endl;
 		if(IsInteger(account_entry) == true){
 			istringstream account_buf(account_entry);
 			account_buf >> account_input;
@@ -574,12 +602,14 @@ void Transactions::Disable(User user){
 		cout << "Please enter the account name: ";
 		cin.ignore(1, '\n');
 		getline(cin, name_input);
+		cout << name_input << endl;
 		transform(name_input.begin(), name_input.end(), name_input.begin(), ::toupper);
 		//Ask for the user to enter an account number
 		int account_input;
 		string account_entry;
 		cout << "Please enter the account number: ";
 		cin >> account_entry;
+		cout << account_entry << endl;
 		if(IsInteger(account_entry) == true){
 			istringstream account_buf(account_entry);
 			account_buf >> account_input;
@@ -615,12 +645,14 @@ void Transactions::ChangePlan(User user){
 		cout << "Please enter the account name: ";
 		cin.ignore(1, '\n');
 		getline(cin, name_input);
+		cout << name_input << endl;
 		transform(name_input.begin(), name_input.end(), name_input.begin(), ::toupper);
 		//Ask for the user to enter an account number
 		int account_input;
 		string account_entry;
 		cout << "Please enter the account number: ";
 		cin >> account_entry;
+		cout << account_entry << endl;
 		if(IsInteger(account_entry) == true){
 			istringstream account_buf(account_entry);
 			account_buf >> account_input;

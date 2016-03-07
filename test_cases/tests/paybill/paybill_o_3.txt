@@ -1,0 +1,10 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please Enter a command: paybill
+Pay Bills
+--------------------------
+Please enter account name: Invalid Name
+Error: No account with that name found.
+Please enter a command: logout
+Logout Successful

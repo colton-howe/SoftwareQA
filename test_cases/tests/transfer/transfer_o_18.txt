@@ -1,0 +1,14 @@
+Please enter a command: login
+Login as Standard or Admin: standard
+Please enter account name: Aaron Active
+Login Successful
+Please enter a command: transfer
+Transfer
+--------------------------
+Please enter account name: Aaron Active
+Please enter account number where the money is being transfered from: 00002
+Please enter account number where the money is being transfered to: 00001
+Please enter the transfer amount: 1200
+Error: Number must be less than $1000 in standard mode.
+Please enter a command: logout
+Logout Successful

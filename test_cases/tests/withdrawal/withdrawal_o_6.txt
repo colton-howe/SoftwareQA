@@ -1,0 +1,10 @@
+Please enter a command: login
+Login as Standard or Admin: admin
+Login Successful
+Please enter a command: withdrawal
+Withdrawal
+--------------------------
+Please enter account name: Disabled Account Holder Name
+Error: No active accounts available.
+Please enter a command: logout
+Logout Successful
