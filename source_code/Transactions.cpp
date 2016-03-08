@@ -97,7 +97,7 @@ void Transactions::Withdrawal(User user){
 		//If ReadAccount returns an account with name "ERROR", then the account doesn't exist. otherwise, continue with withdrawal
 		if(found_user.GetName().compare("ERROR") == 0){
 			cout << "Error: Account not found." << endl;
-		} else if (active_user.GetStatus() == 'D'){
+		} else if (found_user.GetStatus() == 'D'){
 				cout << "Error: Account is currently disabled. Please contact admin." << endl;
 		} else {
 			//Ask for withdraw amount
@@ -121,7 +121,7 @@ void Transactions::Withdrawal(User user){
 					cout << "Error: Withdrawal amount + fee is greater then balance" << endl;
 				} else if (user.GetName() != "ADMIN" && withdraw_amount > 500){
 					cout << "Error: Only admin may withdraw more then $500.00" << endl;
-				} else if (withdraw_amount < 0 || (withdraw_amount % 5) != 0){
+				} else if (withdraw_amount < 0 || ((int)withdraw_amount % 5) != 0){
 					cout << "Error: Invalid withdrawal amount" << endl;
 				} else {
 					//Write transaction log
@@ -172,7 +172,7 @@ void Transactions::Deposit(User user){
 		//If ReadAccount returns an account with name "ERROR", then the account doesn't exist. otherwise, continue with deposit
 		if(found_user.GetName().compare("ERROR") == 0){
 			cout << "Error: Account not found." << endl;
-		} else if (active_user.GetStatus() == 'D'){
+		} else if (found_user.GetStatus() == 'D'){
 			cout << "Error: Account is currently disabled. Please contact admin." << endl;
 		} else {
 			//Ask for withdraw amount
@@ -246,7 +246,7 @@ void Transactions::Transfer(User user){
 		//If ReadAccount returns an account with name "ERROR", then the account doesn't exist. otherwise, continue with paybill
 		if (found_user.GetName().compare("ERROR") == 0) {
 			cout << "Error: Account not found." << endl;
-		} else if (active_user.GetStatus() == 'D'){
+		} else if (found_user.GetStatus() == 'D'){
 			cout << "Error: Account is currently disabled. Please contact admin." << endl;
 		} else {
 			cout << "Please enter the account number to transfer to: ";
@@ -258,7 +258,7 @@ void Transactions::Transfer(User user){
 				//Get the payee account information
 				User payee = ReadAccount("", transfer_account);
 				//Ask for withdraw amount
-				if (active_user.GetStatus() == 'D'){
+				if (payee.GetStatus() == 'D'){
 					cout << "Error: Account is currently disabled. Please contact admin." << endl;
 				} else {
 					double transfer_amount;
@@ -302,8 +302,6 @@ void Transactions::Transfer(User user){
 							cout << "Transaction Successful" << endl;
 						}
 					}
-				} else {
-					cout << "Error: Not a number entered." << endl;
 				}
 			} else {
 				cout << "Error: Not a number entered." << endl;
@@ -343,7 +341,7 @@ void Transactions::PayBill(User user){
 		//If ReadAccount returns an account with name "ERROR", then the account doesn't exist. otherwise, continue with withdrawal
 		if (found_user.GetName().compare("ERROR") == 0) {
 			cout << "Error: Account not found." << endl;
-		} else if (active_user.GetStatus() == 'D'){
+		} else if (found_user.GetStatus() == 'D'){
 			cout << "Error: Account is currently disabled. Please contact admin." << endl;
 		} else {
 			//Ask company to whom bill is being paid
@@ -352,9 +350,10 @@ void Transactions::PayBill(User user){
 			cout << "The Bright Light Electric Company (EC)" << endl;
 			cout << "Credit Card Company Q (CQ)" << endl;
 			cout << "Low Definition TV, Inc. (TV)" << endl;
-			cout << "Enter their abbreviation (e.g. Credit Card Company enter CQ) :";
+			cout << "Enter their abbreviation (e.g. Credit Card Company enter CQ): ";
 			cin >> company_name;
 			cout << company_name << endl;
+			transform(company_name.begin(), company_name.end(), company_name.begin(), ::toupper);
 			if(company_name.compare("EC") == 0 || company_name.compare("CQ") == 0 || company_name.compare("TV") == 0){
 				//Ask for bill amount
 				double bill_amount;
