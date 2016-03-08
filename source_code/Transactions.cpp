@@ -524,12 +524,11 @@ void Transactions::Delete(User user){
 				}
 				entire_file = entire_file.substr(0,entire_file.length()-1);
 				size_t beginning_of_line = entire_file.find(found_line);
-				entire_file.replace(beginning_of_line, 37, "");
-				if(entire_file[beginning_of_line+38] == ' '){
-					entire_file.replace(beginning_of_line-1, 1, "");
-				}
+				string before = entire_file.substr(0, 0+beginning_of_line);
+				string after = entire_file.substr(beginning_of_line+37);
+				entire_file = before + after;
 				editted_accounts.open("accounts.txt");
-				editted_accounts << entire_file << "\n";
+				editted_accounts << entire_file;
 				editted_accounts.close();
 				string found_number, found_balance, found_name;
 				for(int i = 0; i < 36; i++){
@@ -732,7 +731,6 @@ User Transactions::ReadAccount(string name, int account){
 		if(name.compare("") == 0){
 			if(account_num == account){
 				User found_account(account_num, account_name, balance);
-				cout << "Account Name: " << account_name << " Account Status: " << account_status << endl;
 				if(account_status.compare("D") == 0){
 					found_account.SetStatus();
 				}
