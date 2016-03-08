@@ -117,7 +117,7 @@ void Transactions::Withdrawal(User user){
 					fee = 0.05;
 				}
 				//Check for error conditions withdrawal > balance, withdrawal > 500 when not admin, withdrawal not divisible by 5.
-				if(fee + withdraw_amount > found_user.GetNewBalance()){
+				if(fee + withdraw_amount > found_user.GetBalance()){
 					cout << "Error: Withdrawal amount + fee is greater then balance" << endl;
 				} else if (user.GetName() != "ADMIN" && withdraw_amount > 500){
 					cout << "Error: Only admin may withdraw more then $500.00" << endl;
@@ -128,8 +128,8 @@ void Transactions::Withdrawal(User user){
 					TransactionsFile trans("01", found_user.GetName(), found_user.GetNumber(), withdraw_amount);
 					trans.WriteTransaction();
 					//Update the users account balance.
-					found_user.UpdateNewBalance(0-withdraw_amount-fee);
-					found_user.UpdateBalance();
+					found_user.UpdateNewBalance(found_user.GetNewBalance()-withdraw_amount-fee);
+					found_user.UpdateBalance(0-withdraw_amount-fee);
 					//Update daily account file
 					UpdateDay(found_user);
 					cout << "Transaction Successful" << endl;
@@ -192,7 +192,7 @@ void Transactions::Deposit(User user){
 					fee = 0.05;
 				}
 				//Check for error conditions deposit > 99999.99, deposit amount not negative.
-				if(deposit_amount - fee > 99999.99){
+				if(deposit_amount + found_user.GetNewBalance() - fee > 99999.99){
 					cout << "Error: Deposit amount cannot leave account balance at higher then 99999.99" << endl;
 				} else if (deposit_amount < 0){
 					cout << "Error: Invalid deposit amount" << endl;
@@ -201,8 +201,8 @@ void Transactions::Deposit(User user){
 					TransactionsFile trans("04", found_user.GetName(), found_user.GetNumber(), deposit_amount);
 					trans.WriteTransaction();
 					//Update the users account balance.
-					found_user.UpdateNewBalance(0-fee);
-					found_user.UpdateBalance();
+					found_user.UpdateNewBalance(found_user.GetNewBalance()+deposit_amount - fee);
+					found_user.UpdateBalance(0-fee);
 					//Update daily account file
 					UpdateDay(found_user);
 					cout << "Transaction Successful" << endl;
@@ -279,13 +279,13 @@ void Transactions::Transfer(User user){
 							fee = 0.05;
 						}
 						//Check for error conditions transfer amount > balance, withdrawal > 500 when not admin, withdrawal not divisible by 5.
-						if (fee + transfer_amount > found_user.GetNewBalance()) {
+						if (fee + transfer_amount > found_user.GetBalance()) {
 							cout << "Error: Transfer amount + fee is greater then balance" << endl;
 						} else if (user.GetName() != "ADMIN" && transfer_amount > 1000) {
 							cout << "Error: Only admin may transfer more then $1000.00" << endl;
 						} else if (transfer_amount < 0 ) {
 							cout << "Error: Invalid transfer amount" << endl;
-						} else if (payee.GetBalance() + transfer_amount - fee > 99999.99) {
+						} else if (payee.GetNewBalance() + transfer_amount - fee > 99999.99) {
 							cout << "Error: Payee account would be over balance cap of $99999.99" << endl;
 						} else if (payee.GetStatus() == 'D' || found_user.GetStatus() == 'D' ) {
 							cout << "Error: Accounts must be active" << endl;
@@ -296,10 +296,12 @@ void Transactions::Transfer(User user){
 							TransactionsFile trans2("02", payee.GetName(), payee.GetNumber(), transfer_amount);
 							trans2.WriteTransaction();
 							//Update the users account balance.
-							found_user.UpdateNewBalance(0 - transfer_amount - fee);
-							found_user.UpdateBalance();
+							found_user.UpdateNewBalance(found_user.GetNewBalance() - transfer_amount - fee);
+							found_user.UpdateBalance(0 - transfer_amount - fee);
+							payee.UpdateNewBalance(found_user.GetNewBalance()+transfer_amount);
 							//Update daily account file
 							UpdateDay(found_user);
+							UpdateDay(payee);
 							//Update the person receiving the money.
 							cout << "Transaction Successful" << endl;
 						}
@@ -387,8 +389,8 @@ void Transactions::PayBill(User user){
 						TransactionsFile trans("03", found_user.GetName(), found_user.GetNumber(), bill_amount);
 						trans.WriteTransaction();
 						//Update the users account balance.
-						found_user.UpdateNewBalance(0 - bill_amount);
-						found_user.UpdateBalance();
+						found_user.UpdateNewBalance(found_user.GetNewBalance() - bill_amount - fee);
+						found_user.UpdateBalance(0 - bill_amount - fee);
 						//Update daily account file
 						UpdateDay(found_user);
 						cout << "Transaction Successful" << endl;
@@ -680,8 +682,10 @@ void Transactions::ChangePlan(User user){
 			} else {
 				found_user.SetPlan();
 				if (found_user.GetPlan() == "NP") {
+					found_user.SetPlan();
 					cout << "Account is now a normal account." << endl;
 				} else {
+					found_user.SetPlan();
 					cout << "Account is now a student account." << endl;
 				}
 				TransactionsFile trans("08", found_user.GetName(), found_user.GetNumber(), found_user.GetBalance());
@@ -705,8 +709,9 @@ User Transactions::ReadAccount(string name, int account){
 		string account_status;
 		string account_balance;
 		string account_to_check;
+		string account_new_balance;
 		//Go through each line and process the information in it.
-		for(int i = 0; i < 36; i++){
+		for(int i = 0; i < line.length(); i++){
 			if(i >= 0 && i < 5){
 				account_to_check = account_to_check + line[i];
 			} else if (i > 5 && i < 25) {
@@ -717,8 +722,10 @@ User Transactions::ReadAccount(string name, int account){
 				}
 			} else if (i > 25 && i < 27){
 				account_status = account_status + line[i];
-			} else if (i > 27){
+			} else if (i > 27 && i < 36){
 				account_balance = account_balance + line[i];
+			} else if (i > 36){
+				account_new_balance = account_new_balance + line[i];
 			}
 		}
 		istringstream balance_buf(account_balance);
@@ -727,10 +734,14 @@ User Transactions::ReadAccount(string name, int account){
 		istringstream number_buf(account_to_check);
 		int account_num;
 		number_buf >> account_num;
+		istringstream new_balance_buf(account_new_balance);
+		double new_balance;
+		new_balance_buf >> new_balance;
 		//If the account is the account we are looking for, put its information into a user and return it.
 		if(name.compare("") == 0){
 			if(account_num == account){
 				User found_account(account_num, account_name, balance);
+				found_account.UpdateNewBalance(new_balance);
 				if(account_status.compare("D") == 0){
 					found_account.SetStatus();
 				}
@@ -739,6 +750,7 @@ User Transactions::ReadAccount(string name, int account){
 		} else {
 		  	if(account_num == account && account_name.compare(name) == 0){
 				User found_account(account_num, account_name, balance);
+				found_account.UpdateNewBalance(new_balance);
 				if(account_status.compare("D") == 0){
 					found_account.SetStatus();
 				}
@@ -753,7 +765,7 @@ User Transactions::ReadAccount(string name, int account){
 		string account_balance;
 		string account_to_check;
 		//Process the information pulled from the account line
-		for(int i = 0; i < 36; i++){
+		for(int i = 0; i < line.length(); i++){
 			if(i >= 0 && i < 5){
 				account_to_check = account_to_check + line[i];
 			} else if (i > 5 && i < 25) {
@@ -778,6 +790,7 @@ User Transactions::ReadAccount(string name, int account){
 	  	if(name.compare("") == 0){
 			if(account_num == account){
 				User found_account(account_num, account_name, balance);
+				found_account.UpdateNewBalance(balance);
 				if(account_status.compare("D") == 0){
 					found_account.SetStatus();
 				}
@@ -786,6 +799,7 @@ User Transactions::ReadAccount(string name, int account){
 		} else {
 		  	if(account_num == account && account_name.compare(name) == 0){
 				User found_account(account_num, account_name, balance);
+				found_account.UpdateNewBalance(balance);
 				if(account_status.compare("D") == 0){
 					found_account.SetStatus();
 				}
@@ -813,8 +827,9 @@ void Transactions::UpdateDay(User changed_user){
 		string account_status;
 		string account_balance;
 		string account_to_check;
+		string account_new_balance;
 		//Go through each line and process the information in it.
-		for(int i = 0; i < 36; i++){
+		for(int i = 0; i < line.length(); i++){
 			if(i >= 0 && i < 5){
 				account_to_check = account_to_check + line[i];
 			} else if (i > 5 && i < 25) {
@@ -825,13 +840,12 @@ void Transactions::UpdateDay(User changed_user){
 				}
 			} else if (i > 25 && i < 27){
 				account_status = account_status + line[i];
-			} else if (i > 27){
+			} else if (i > 27 && i < 36){
 				account_balance = account_balance + line[i];
+			} else if (i > 36){
+				account_new_balance = account_new_balance + line[i];
 			}
 		}
-		istringstream balance_buf(account_balance);
-		double balance;
-		balance_buf >> balance;
 		istringstream number_buf(account_to_check);
 		int account_num;
 		number_buf >> account_num;
@@ -842,7 +856,7 @@ void Transactions::UpdateDay(User changed_user){
 	}
 	//Remove the last newline from the file.
 	entire_file = entire_file.substr(0,entire_file.length()-1);
-	//If we didn't find the account, format a string correctly containing the users information and put it int their with their new balance.
+	//If we didn't find the account, format a string correctly containing the users information and put it in their with the new balance.
 	//If we did find the account, update the balance of the account in the file.
 	if(found_line == "NULL"){
 		daily_changes.open("daily_changes.txt", ios::app);
@@ -855,6 +869,7 @@ void Transactions::UpdateDay(User changed_user){
 		stringstream status_buf;
 		status_buf << changed_user.GetStatus();
 		string found_status = status_buf.str();
+
 		stringstream balance_buf;
 		balance_buf << setprecision(2) << fixed << changed_user.GetBalance();
 		string str_balance = balance_buf.str();
@@ -881,7 +896,17 @@ void Transactions::UpdateDay(User changed_user){
 				str_number.insert(0,"0");
 			}
 		}
-		string new_line = str_number + " " + found_name + " " + found_status + " " + str_balance + "\n";
+
+		stringstream new_balance_buf;
+		new_balance_buf << setprecision(2) << fixed << changed_user.GetNewBalance();
+		string str_new_balance = balance_buf.str();
+		if(str_new_balance.length() < 8){
+			for(int i = 0; i < 9-str_new_balance.length(); i++){
+				str_new_balance.insert(0,"0");
+			}
+		}
+
+		string new_line = str_number + " " + found_name + " " + found_status + " " + str_balance + " " + str_new_balance + "\n";
 		daily_changes << new_line;
 		daily_changes.close();
 	} else {
@@ -894,11 +919,21 @@ void Transactions::UpdateDay(User changed_user){
 				str_balance.insert(0,"0");
 			}
 		}
+
+		stringstream new_balance_buf;
+		new_balance_buf << setprecision(2) << fixed << changed_user.GetNewBalance();
+		string str_new_balance = new_balance_buf.str();
+		if(str_new_balance.length() < 8){
+			for(int i = 0; i < 9-str_new_balance.length(); i++){
+				str_new_balance.insert(0,"0");
+			}
+		}
 		//Change the balance of the account to the new account
 		string original_line = found_line;
 		found_line.replace(28,8,str_balance);
+		found_line.replace(37,8,str_new_balance);
 		//Go through the string containg the entire file and replace the line we had with the new editted line.
-		entire_file.replace(entire_file.find(original_line), 37, found_line);
+		entire_file.replace(entire_file.find(original_line), 46, found_line);
 		//Replace the old daily changes file with the new, editted daily changes file using the editted entire file string.
 		daily_changes.open("daily_changes.txt");
 		daily_changes << entire_file << "\n";

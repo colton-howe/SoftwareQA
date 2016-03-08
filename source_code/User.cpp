@@ -31,10 +31,10 @@ void User::SetPlan(){
 	}
 }
 
-void User::UpdateBalance(){
-	balance_ = new_balance_;
+void User::UpdateBalance(double change){
+	balance_ = balance_ + change;
 }
 
 void User::UpdateNewBalance(double change){
-	new_balance_ = new_balance_ + change;
+	new_balance_ = change;
 }

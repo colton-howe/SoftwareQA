@@ -24,7 +24,7 @@ public:
 	double GetNewBalance() { return new_balance_; }
 	void SetStatus();
 	void SetPlan();
-	void UpdateBalance();
+	void UpdateBalance(double change);
 	void UpdateNewBalance(double change);
 };
 
