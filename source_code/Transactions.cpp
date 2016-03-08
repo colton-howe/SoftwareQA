@@ -258,7 +258,9 @@ void Transactions::Transfer(User user){
 				//Get the payee account information
 				User payee = ReadAccount("", transfer_account);
 				//Ask for withdraw amount
-				if (payee.GetStatus() == 'D'){
+				if (found_user.GetName().compare("ERROR") == 0) {
+					cout << "Error: Payee account not found." << endl;
+				} else if (payee.GetStatus() == 'D'){
 					cout << "Error: Account is currently disabled. Please contact admin." << endl;
 				} else {
 					double transfer_amount;
@@ -283,7 +285,7 @@ void Transactions::Transfer(User user){
 							cout << "Error: Only admin may transfer more then $1000.00" << endl;
 						} else if (transfer_amount < 0 ) {
 							cout << "Error: Invalid transfer amount" << endl;
-						} else if (payee.GetNewBalance() + transfer_amount - fee > 99999.99) {
+						} else if (payee.GetBalance() + transfer_amount - fee > 99999.99) {
 							cout << "Error: Payee account would be over balance cap of $99999.99" << endl;
 						} else if (payee.GetStatus() == 'D' || found_user.GetStatus() == 'D' ) {
 							cout << "Error: Accounts must be active" << endl;
@@ -301,6 +303,8 @@ void Transactions::Transfer(User user){
 							//Update the person receiving the money.
 							cout << "Transaction Successful" << endl;
 						}
+					} else {
+						cout << "Error: Not a number entered." << endl;
 					}
 				}
 			} else {
@@ -520,9 +524,10 @@ void Transactions::Delete(User user){
 				}
 				entire_file = entire_file.substr(0,entire_file.length()-1);
 				size_t beginning_of_line = entire_file.find(found_line);
-				cout << entire_file << endl;
-				cout << beginning_of_line << endl;
 				entire_file.replace(beginning_of_line, 37, "");
+				if(entire_file[beginning_of_line+38] == ' '){
+					entire_file.replace(beginning_of_line-1, 1, "");
+				}
 				editted_accounts.open("accounts.txt");
 				editted_accounts << entire_file << "\n";
 				editted_accounts.close();
@@ -671,6 +676,8 @@ void Transactions::ChangePlan(User user){
 			//If ReadAccount returns an account with name "ERROR", then the account doesn't exist. otherwise, continue with withdrawal
 			if (found_user.GetName().compare("ERROR") == 0) {
 				cout << "Error: Account not found." << endl;
+			} else if (found_user.GetStatus() == 'D') {
+				cout << "Error: Cannot change plan of disabled account." << endl;
 			} else {
 				found_user.SetPlan();
 				if (found_user.GetPlan() == "NP") {
@@ -722,9 +729,10 @@ User Transactions::ReadAccount(string name, int account){
 		int account_num;
 		number_buf >> account_num;
 		//If the account is the account we are looking for, put its information into a user and return it.
-		if(account_name == ""){
+		if(name.compare("") == 0){
 			if(account_num == account){
 				User found_account(account_num, account_name, balance);
+				cout << "Account Name: " << account_name << " Account Status: " << account_status << endl;
 				if(account_status.compare("D") == 0){
 					found_account.SetStatus();
 				}
@@ -769,7 +777,7 @@ User Transactions::ReadAccount(string name, int account){
 		int account_num;
 		number_buf >> account_num;
 		//If account is found, return a user that contains its information.
-	  	if(account_name == ""){
+	  	if(name.compare("") == 0){
 			if(account_num == account){
 				User found_account(account_num, account_name, balance);
 				if(account_status.compare("D") == 0){
