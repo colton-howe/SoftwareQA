@@ -7,7 +7,7 @@
 
 using namespace std;
 
-main(){
+int main(){
 	//Set the inital user as not logged in.
 	User active_user(00000, "NULL", 0);
 	while(true){
@@ -29,7 +29,7 @@ main(){
 				//If they enter admin, log them in as admin. Otherwise, ask for name and search for that user.
 				if(input == "admin"){
 					active_user = trans.Login("admin");
-				} else if(input == "standard") {
+				} else if (input == "standard") {
 					cout << "Please enter the account name: ";
 					cin.ignore(1, '\n');
 					getline(cin, input);
@@ -40,7 +40,7 @@ main(){
 					cout << "Error: Please enter 'standard' or 'admin' as your session type." << endl;
 				}
 			} else if (input == "exit"){
-				exit(0);
+				return 0;
 			} else {
 				cout << "Please login first before issuing commands" << endl;
 			}
@@ -48,8 +48,6 @@ main(){
 			//Parse user input and call correct command.
 			if(input == "login"){
 				cout << "Error: Already logged into account" << endl;
-			} else if (active_user.GetStatus() == 'D'){
-				cout << "Error: Account is currently disabled. Please contact admin." << endl;
 			} else if (input == "withdrawal"){
 				trans.Withdrawal(active_user);
 			} else if (input == "transfer"){
@@ -91,7 +89,7 @@ main(){
 			} else if (input == "logout"){
 				active_user = trans.Logout(active_user);
 			} else if (input == "exit"){
-				exit(0);
+				return 0;
 			} else {
 				cout << "Error: Not a valid command." << endl;
 			}

@@ -13,6 +13,7 @@ private:
 public:
 	Transactions();
 	bool IsInteger(string check_string);
+	bool IsDouble(string check_string);
 	User Login(string name);
 	User Logout(User user);
 	void Withdrawal(User user);

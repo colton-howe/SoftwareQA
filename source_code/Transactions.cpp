@@ -27,10 +27,10 @@ bool Transactions::IsInteger(string check_string){
 
 bool Transactions::IsDouble(string check_string){
     char* p = 0;
-    strtod(check_string, &p);
+    strtod(check_string.c_str(), &p);
     //If the function finds a character that could not be interpretted as a double, it stores its index in p. If p is
 	//not the default 0 value, then it can not be a double and is false. Otherwise, it can be a double and returns true.
-    return !(*endptr != '\0' || endptr == check_string);
+    return !(*p != 0 || p == check_string.c_str());
 }
 
 User Transactions::Login(string name){
@@ -97,9 +97,11 @@ void Transactions::Withdrawal(User user){
 		//If ReadAccount returns an account with name "ERROR", then the account doesn't exist. otherwise, continue with withdrawal
 		if(found_user.GetName().compare("ERROR") == 0){
 			cout << "Error: Account not found." << endl;
+		} else if (active_user.GetStatus() == 'D'){
+				cout << "Error: Account is currently disabled. Please contact admin." << endl;
 		} else {
 			//Ask for withdraw amount
-			int withdraw_amount;
+			double withdraw_amount;
 			string withdraw_entry;
 			cout << "Please enter the amount to withdraw: ";
 			cin >> withdraw_entry;
@@ -170,6 +172,8 @@ void Transactions::Deposit(User user){
 		//If ReadAccount returns an account with name "ERROR", then the account doesn't exist. otherwise, continue with deposit
 		if(found_user.GetName().compare("ERROR") == 0){
 			cout << "Error: Account not found." << endl;
+		} else if (active_user.GetStatus() == 'D'){
+			cout << "Error: Account is currently disabled. Please contact admin." << endl;
 		} else {
 			//Ask for withdraw amount
 			double deposit_amount;
@@ -242,7 +246,8 @@ void Transactions::Transfer(User user){
 		//If ReadAccount returns an account with name "ERROR", then the account doesn't exist. otherwise, continue with paybill
 		if (found_user.GetName().compare("ERROR") == 0) {
 			cout << "Error: Account not found." << endl;
-			// TODO check transferee account
+		} else if (active_user.GetStatus() == 'D'){
+			cout << "Error: Account is currently disabled. Please contact admin." << endl;
 		} else {
 			cout << "Please enter the account number to transfer to: ";
 			cin >> account_entry;
@@ -253,45 +258,49 @@ void Transactions::Transfer(User user){
 				//Get the payee account information
 				User payee = ReadAccount("", transfer_account);
 				//Ask for withdraw amount
-				int transfer_amount;
-				string transfer_entry;
-				cout << "Please enter the amount to transfer: ";
-				cin >> transfer_entry;
-				cout << transfer_entry << endl;
-				if(IsDouble(transfer_entry) == true){
-					istringstream transfer_buf(transfer_entry);
-					transfer_buf >> transfer_amount;
-					//Before checking transfer amount, check which fee we need to charge. 0.10 if not a student, 0.05 if a student
-					double fee;
-					if (found_user.GetPlan() == "NP") {
-						fee = 0.10;
-					} else {
-						fee = 0.05;
-					}
-					//Check for error conditions transfer amount > balance, withdrawal > 500 when not admin, withdrawal not divisible by 5.
-					if (fee + transfer_amount > found_user.GetNewBalance()) {
-						cout << "Error: Transfer amount + fee is greater then balance" << endl;
-					} else if (user.GetName() != "ADMIN" && transfer_amount > 1000) {
-						cout << "Error: Only admin may transfer more then $1000.00" << endl;
-					} else if (transfer_amount < 0 ) {
-						cout << "Error: Invalid transfer amount" << endl;
-					} else if (payee.GetNewBalance() + transfer_amount - fee > 99999.99) {
-						cout << "Error: Payee account would be over balance cap of $99999.99" << endl;
-					} else if (payee.GetStatus() == 'D' || found_user.GetStatus() == 'D' ) {
-						cout << "Error: Accounts must be active" << endl;
-					} else {
-						//Write transaction log
-						TransactionsFile trans1("02", found_user.GetName(), found_user.GetNumber(), transfer_amount);
-						trans1.WriteTransaction();
-						TransactionsFile trans2("02", payee.GetName(), payee.GetNumber(), transfer_amount);
-						trans2.WriteTransaction();
-						//Update the users account balance.
-						found_user.UpdateNewBalance(0 - transfer_amount - fee);
-						found_user.UpdateBalance();
-						//Update daily account file
-						UpdateDay(found_user);
-						//Update the person receiving the money.
-						cout << "Transaction Successful" << endl;
+				if (active_user.GetStatus() == 'D'){
+					cout << "Error: Account is currently disabled. Please contact admin." << endl;
+				} else {
+					double transfer_amount;
+					string transfer_entry;
+					cout << "Please enter the amount to transfer: ";
+					cin >> transfer_entry;
+					cout << transfer_entry << endl;
+					if(IsDouble(transfer_entry) == true){
+						istringstream transfer_buf(transfer_entry);
+						transfer_buf >> transfer_amount;
+						//Before checking transfer amount, check which fee we need to charge. 0.10 if not a student, 0.05 if a student
+						double fee;
+						if (found_user.GetPlan() == "NP") {
+							fee = 0.10;
+						} else {
+							fee = 0.05;
+						}
+						//Check for error conditions transfer amount > balance, withdrawal > 500 when not admin, withdrawal not divisible by 5.
+						if (fee + transfer_amount > found_user.GetNewBalance()) {
+							cout << "Error: Transfer amount + fee is greater then balance" << endl;
+						} else if (user.GetName() != "ADMIN" && transfer_amount > 1000) {
+							cout << "Error: Only admin may transfer more then $1000.00" << endl;
+						} else if (transfer_amount < 0 ) {
+							cout << "Error: Invalid transfer amount" << endl;
+						} else if (payee.GetNewBalance() + transfer_amount - fee > 99999.99) {
+							cout << "Error: Payee account would be over balance cap of $99999.99" << endl;
+						} else if (payee.GetStatus() == 'D' || found_user.GetStatus() == 'D' ) {
+							cout << "Error: Accounts must be active" << endl;
+						} else {
+							//Write transaction log
+							TransactionsFile trans1("02", found_user.GetName(), found_user.GetNumber(), transfer_amount);
+							trans1.WriteTransaction();
+							TransactionsFile trans2("02", payee.GetName(), payee.GetNumber(), transfer_amount);
+							trans2.WriteTransaction();
+							//Update the users account balance.
+							found_user.UpdateNewBalance(0 - transfer_amount - fee);
+							found_user.UpdateBalance();
+							//Update daily account file
+							UpdateDay(found_user);
+							//Update the person receiving the money.
+							cout << "Transaction Successful" << endl;
+						}
 					}
 				} else {
 					cout << "Error: Not a number entered." << endl;
@@ -334,6 +343,8 @@ void Transactions::PayBill(User user){
 		//If ReadAccount returns an account with name "ERROR", then the account doesn't exist. otherwise, continue with withdrawal
 		if (found_user.GetName().compare("ERROR") == 0) {
 			cout << "Error: Account not found." << endl;
+		} else if (active_user.GetStatus() == 'D'){
+			cout << "Error: Account is currently disabled. Please contact admin." << endl;
 		} else {
 			//Ask company to whom bill is being paid
 			string company_name;
@@ -346,7 +357,7 @@ void Transactions::PayBill(User user){
 			cout << company_name << endl;
 			if(company_name.compare("EC") == 0 || company_name.compare("CQ") == 0 || company_name.compare("TV") == 0){
 				//Ask for bill amount
-				int bill_amount;
+				double bill_amount;
 				string bill_entry;
 				cout << "Please enter the amount to pay: ";
 				cin >> bill_entry;
@@ -362,7 +373,7 @@ void Transactions::PayBill(User user){
 						fee = 0.05;
 					}
 					//Check for error conditions withdrawal > balance, withdrawal > 2000 when not admin, withdrawal not divisible by 5.
-					if (fee + bill_amount > found_user.GetNewBalance()) {
+					if (fee + bill_amount > found_user.GetBalance()) {
 						cout << "Error: Bill payment amount + fee is greater then balance" << endl;
 					} else if (user.GetName() != "ADMIN" && bill_amount > 2000) {
 						cout << "Error: Only admin may pay more then $2000.00" << endl;
@@ -407,7 +418,7 @@ void Transactions::Create(User user){
 			name_input.resize(20);
 		}
 		//Ask for the user to enter an account number
-		int balance_amount;
+		double balance_amount;
 		string balance_entry;
 		cout << "Please enter the initial account balance: ";
 		cin >> balance_entry;
